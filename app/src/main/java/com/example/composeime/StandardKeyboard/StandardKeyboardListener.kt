@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.StrictMode
 import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -42,6 +43,14 @@ import java.net.DatagramSocket
 import java.net.InetAddress
 import java.net.UnknownHostException
 import androidx.compose.runtime.derivedStateOf
+import com.example.composeime.rotatoryLayoutAbc
+import com.example.composeime.rotatoryLayoutCQwerty
+import com.example.composeime.rotatoryLayoutCirrin
+import com.example.composeime.rotatoryLayoutQwerty
+import com.example.composeime.standardLayoutAbc
+import com.example.composeime.standardLayoutCQwerty
+import com.example.composeime.standardLayoutCirrin
+import com.example.composeime.standardLayoutQwerty
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -50,17 +59,41 @@ fun StandardKeyBoardListener(
     modifier: Modifier = Modifier,
     mainLayout: Array<Array<KeyButton>>,
     keyHeight: Float = 30f,
+    changeKeyboardType: () -> Unit,
 ) {
     val ctx = LocalContext.current
 
     var selectedIndex by remember { mutableStateOf(0) }
     val focusRequester = remember { FocusRequester() }
     var hasFocus by remember { mutableStateOf(false) }
-    var layout by remember { mutableStateOf(mainLayout) }
-    var shift by remember { mutableStateOf(false) }
+
+    var layout by remember {mutableStateOf(mainLayout)}
+    var layoutType by remember { mutableStateOf(0) }
+
+    var shift by remember { mutableStateOf(true) }
     val handler = Handler(Looper.getMainLooper())
 
     val numberOfItems by remember {derivedStateOf {getItemsInMatrix(layout)}}
+
+    fun changeLayout() {
+        if (layoutType == 1) {
+            layoutType = 2
+            layout = standardLayoutQwerty
+        }
+        else if (layoutType == 2) {
+            layoutType = 3
+            layout = standardLayoutCirrin
+        }
+        else if (layoutType == 3) {
+            layoutType = 4
+            layout = standardLayoutCQwerty
+        }else{
+            layoutType = 1
+            layout = standardLayoutAbc
+        }
+        selectedIndex = 0
+    }
+
 
     fun goRight() {
         if (selectedIndex >= 0 && selectedIndex < numberOfItems-1)
@@ -98,10 +131,7 @@ fun StandardKeyBoardListener(
 
                 ExternalButtonAction.DEL -> (ctx as IMEService).currentInputConnection.deleteSurroundingText(1,0)
                 ExternalButtonAction.OK -> {
-                    (ctx as IMEService).currentInputConnection.let {
-                        it.sendKeyEvent(android.view.KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
-                        it.sendKeyEvent(android.view.KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
-                    }
+                    (ctx as IMEService).currentInputConnection?.performEditorAction(EditorInfo.IME_ACTION_DONE)
                 }
             }
     }
@@ -126,6 +156,8 @@ fun StandardKeyBoardListener(
                             0 -> goLeft()
                             1 -> enter()
                             2 -> goRight()
+                            3 -> changeLayout()
+                            4 -> changeKeyboardType()
                         }
                     }
                 }

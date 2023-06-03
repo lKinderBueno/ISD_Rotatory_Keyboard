@@ -27,14 +27,19 @@ import androidx.compose.ui.unit.dp
 import com.example.composeime.ui.StandardKeyboard.StandardKeyBoardListener
 import com.example.composeime.ui.bgColor
 
-@OptIn(ExperimentalComposeUiApi::class)
 class ComposeKeyboardView(context: Context) : AbstractComposeView(context) {
 
     @Composable
     override fun Content() {
         var rotatoryLayout by remember { mutableStateOf(rotatoryLayoutAbc) }
         var standardLayout by remember { mutableStateOf(standardLayoutQwerty) }
-        var mainMode by remember { mutableStateOf(0) }
+        var keyboardType by remember { mutableStateOf(0) }
+
+        fun changeKeyboardType() {
+            if (keyboardType == 0)
+                keyboardType = 1
+            else keyboardType = 0
+        }
 
         // A surface container using the 'background' color from the theme
         Surface(
@@ -42,28 +47,13 @@ class ComposeKeyboardView(context: Context) : AbstractComposeView(context) {
                 .height(250.dp)
                 .fillMaxWidth()
                 .background(color = Color.Transparent)
-                .focusable()
-                .onKeyEvent {
-                    if (it.type == KeyEventType.KeyUp) {
-                        if (it.key == Key.ChannelDown) {
-                            //if(layout == layoutAbc)
-                            //    layout
-                            true
-                        } else if (it.key == Key.ChannelUp) {
-                            if (mainMode == 0) mainMode = 1
-                            else mainMode = 0
-                            true
-                        }
-                        false
-                    }
-                    false
-                },
         ) {
 
-            if (mainMode == 1)
+            if (keyboardType == 1)
                 KeyBoardListenerSingleRotor(
                     minSize = 10.dp,
-                    mainLayout = rotatoryLayout
+                    mainLayout = rotatoryLayout,
+                    changeKeyboardType =  { changeKeyboardType()},
                 )
             else
                 BoxWithConstraints(
@@ -72,7 +62,10 @@ class ComposeKeyboardView(context: Context) : AbstractComposeView(context) {
                         .background(bgColor),
                     contentAlignment = Alignment.BottomCenter
                 ) {
-                    StandardKeyBoardListener(mainLayout = standardLayout, keyHeight = 60f)
+                    StandardKeyBoardListener(keyHeight = 60f,
+                        mainLayout = standardLayout,
+                        changeKeyboardType =  { changeKeyboardType()},
+                    )
                 }
         }
 

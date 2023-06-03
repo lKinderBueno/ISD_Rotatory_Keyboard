@@ -5,6 +5,7 @@ import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -42,16 +43,39 @@ import java.time.Instant
 fun KeyBoardListenerSingleRotor(
     modifier: Modifier = Modifier,
     minSize: Dp = 64.dp,
-    mainLayout: Array<KeyButton>
+    mainLayout: Array<KeyButton>,
+    changeKeyboardType: () -> Unit,
 ) {
     val ctx = LocalContext.current
 
     var selectedIndex by remember { mutableStateOf(0) }
     val focusRequester = remember { FocusRequester() }
     var hasFocus by remember { mutableStateOf(false) }
-    var layout by remember { mutableStateOf(mainLayout) }
-    var shift by remember { mutableStateOf(false) }
+
+    var layout by remember {mutableStateOf(mainLayout)}
+    var layoutType by remember { mutableStateOf(0) }
+
+    var shift by remember { mutableStateOf(true) }
     val handler = Handler(Looper.getMainLooper())
+
+    fun changeLayout() {
+        if (layoutType == 1) {
+            layoutType = 2
+            layout = rotatoryLayoutQwerty
+        }
+        else if (layoutType == 2) {
+            layoutType = 3
+            layout = rotatoryLayoutCirrin
+        }
+        else if (layoutType == 3) {
+            layoutType = 4
+            layout = rotatoryLayoutCQwerty
+        }else{
+            layoutType = 1
+            layout = rotatoryLayoutAbc
+        }
+        selectedIndex = 0
+    }
 
     fun goRight(){
         if(selectedIndex >= 0 && selectedIndex < layout.size-1)
@@ -76,6 +100,7 @@ fun KeyBoardListenerSingleRotor(
             ExternalButtonAction.NUMBERS -> {
                 if(layout == rotatoryLayoutSymbols) layout = mainLayout;
                 else layout = rotatoryLayoutSymbols
+                selectedIndex = layout.indexOfFirst { it.action == ExternalButtonAction.NUMBERS }
                 shift = false
             }
             ExternalButtonAction.SPACE -> (ctx as IMEService).currentInputConnection.commitText(" ", 1)
@@ -84,10 +109,7 @@ fun KeyBoardListenerSingleRotor(
             }
             ExternalButtonAction.DEL -> (ctx as IMEService).currentInputConnection.deleteSurroundingText(1,0)
             ExternalButtonAction.OK -> {
-                (ctx as IMEService).currentInputConnection.let {
-                    it.sendKeyEvent(android.view.KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
-                    it.sendKeyEvent(android.view.KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
-                }
+                (ctx as IMEService).currentInputConnection?.performEditorAction(EditorInfo.IME_ACTION_DONE)
             }
         }
     }
@@ -111,6 +133,8 @@ fun KeyBoardListenerSingleRotor(
                             0 -> goLeft()
                             1 -> enter()
                             2 -> goRight()
+                            3 -> changeLayout()
+                            4 -> changeKeyboardType()
                         }
                     }
                 }

@@ -4,12 +4,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -19,13 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.guru.fontawesomecomposelib.FaIcon
-import com.guru.fontawesomecomposelib.FaIcons
+import com.example.composeime.SingleRotor.RotatoryKeyboardButton
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -40,8 +35,8 @@ fun KeyBoardSingleRotorComponent(
     shift: Boolean = false,
 ) {
     Box() {
-        val keyboardSize by remember { derivedStateOf {layout.size - 1} }
-        val angleDegreeDifference by remember { derivedStateOf {(360f / (keyboardSize + 1))} }
+        val keyboardSize = layout.size - 1
+        val angleDegreeDifference = 360f / (keyboardSize + 1)
 
         val _radius = 110.sp;//size.width * .15f
 
