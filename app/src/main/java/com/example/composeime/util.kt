@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 val CLIENTPORT = 3000
 val SERVERPORT = 12345
-val SERVER_IP = "192.168.178.71"
+val SERVER_IP = "192.168.1.1"
 
 fun calculateRow(index: Int, array: Array<Array<KeyButton>>): Int? {
     var remainingIndex = index
