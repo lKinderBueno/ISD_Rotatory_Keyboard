@@ -31,7 +31,7 @@ class ComposeKeyboardView(context: Context) : AbstractComposeView(context) {
 
     @Composable
     override fun Content() {
-        var rotatoryLayout by remember { mutableStateOf(rotatoryLayoutAbc) }
+        var rotatoryLayout by remember { mutableStateOf(rotatoryLayoutQwerty) }
         var standardLayout by remember { mutableStateOf(standardLayoutQwerty) }
         var keyboardType by remember { mutableStateOf(0) }
 
