@@ -132,6 +132,9 @@ fun StandardKeyBoardListener(
                 ExternalButtonAction.DEL -> (ctx as IMEService).currentInputConnection.deleteSurroundingText(1,0)
                 ExternalButtonAction.OK -> {
                     (ctx as IMEService).currentInputConnection?.performEditorAction(EditorInfo.IME_ACTION_DONE)
+                    shift = true
+                    layout = mainLayout
+                    selectedIndex = 0
                 }
             }
     }
