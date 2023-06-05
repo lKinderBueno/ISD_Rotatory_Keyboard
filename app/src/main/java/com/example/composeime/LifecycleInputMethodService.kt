@@ -1,11 +1,12 @@
 package com.example.composeime
 
+import android.R
 import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import androidx.annotation.CallSuper
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ServiceLifecycleDispatcher
+
 
 abstract class LifecycleInputMethodService : InputMethodService(), LifecycleOwner {
 
@@ -20,6 +21,21 @@ abstract class LifecycleInputMethodService : InputMethodService(), LifecycleOwne
     override fun onBindInput() {
         super.onBindInput()
         dispatcher.onServicePreSuperOnBind()
+    }
+
+    override fun onEvaluateFullscreenMode(): Boolean {
+
+        //no full screen mode if only simple Kp2aKeyboard is shown
+        return false
+        //val dm = resources.displayMetrics
+        //val displayHeight = dm.heightPixels.toFloat()
+        //// If the display is more than X inches high, don't go to fullscreen mode
+        //val dimen = resources.getDimension(R.dimen.max_height_for_fullscreen)
+        //return if (displayHeight > dimen) {
+        //    false
+        //} else {
+        //    super.onEvaluateFullscreenMode()
+        //}
     }
 
 

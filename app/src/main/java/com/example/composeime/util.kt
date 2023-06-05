@@ -4,7 +4,8 @@ import androidx.compose.ui.graphics.Color
 
 val CLIENTPORT = 3000
 val SERVERPORT = 12345
-val SERVER_IP = "192.168.1.1"
+//val SERVER_IP = "192.168.178.71" //WIFI CASA
+val SERVER_IP = "192.168.1.1"  //LAN UNI
 
 fun calculateRow(index: Int, array: Array<Array<KeyButton>>): Int? {
     var remainingIndex = index
