@@ -45,7 +45,7 @@ fun Options() {
             .fillMaxWidth()
     ) {
         val ctx = LocalContext.current
-        Text(text = "Compose Keyboard")
+        Text(text = "Rotatory Keyboard")
         val (text, setValue) = remember { mutableStateOf(TextFieldValue("")) }
         Spacer(modifier = Modifier.height(16.dp))
         Button(modifier = Modifier.fillMaxWidth(), onClick = {
