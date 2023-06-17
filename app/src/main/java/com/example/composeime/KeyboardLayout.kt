@@ -127,8 +127,8 @@ fun initCQwerty(){
         .plus(KeyButton("DEL", action = ExternalButtonAction.DEL, size = 13))
         .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))
         .plus( b.map{KeyButton(it)}.toTypedArray())
-        .plus(KeyButton("SH", action = ExternalButtonAction.SHIFT))
         .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
+        .plus(KeyButton("SH", action = ExternalButtonAction.SHIFT))
         .plus(KeyButton("123", action = ExternalButtonAction.NUMBERS, size = 13))
         .plus(KeyButton("f"))
 }
