@@ -4,6 +4,7 @@ import android.inputmethodservice.InputMethodService
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.compose.ui.input.key.Key
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistry
@@ -60,8 +61,8 @@ class IMEService : LifecycleInputMethodService(),
                 myKeyboardListener.trigger(keyCode)
                 return true
             }
-            return false
         }
+
         return super.onKeyDown(keyCode, event)
     }
 
@@ -73,7 +74,6 @@ class IMEService : LifecycleInputMethodService(),
                 //myKeyboardListener.trigger(keyCode)
                 return true
             }
-            return false
         }
         return super.onKeyUp(keyCode, event)
     }

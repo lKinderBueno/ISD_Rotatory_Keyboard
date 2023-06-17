@@ -38,7 +38,7 @@ fun KeyBoardSingleRotorComponent(
         val keyboardSize = layout.size - 1
         val angleDegreeDifference = 360f / (keyboardSize + 1)
 
-        val _radius = 110.sp;//size.width * .15f
+        val _radius = 120.sp;//size.width * .15f
 
         fun getRadDiff(index: Int) = (((angleDegreeDifference * index) + (180f)) * (PI / 180f)).toFloat()
 

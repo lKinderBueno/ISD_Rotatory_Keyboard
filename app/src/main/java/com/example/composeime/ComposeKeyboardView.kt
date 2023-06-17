@@ -45,7 +45,7 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier
-                .height(250.dp)
+                .height(270.dp)
                 .fillMaxWidth()
                 .background(color = Color.Transparent)
         ) {
@@ -53,8 +53,9 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
             if (keyboardType == 1)
                 KeyBoardListenerSingleRotor(
                     minSize = 10.dp,
-                    mainLayout = rotatoryLayoutCQwerty,
+                    mainLayout = rotatoryLayoutQwerty,
                     changeKeyboardType =  { changeKeyboardType()},
+                    keyboardListener = keyboardListener
                 )
             else
                 BoxWithConstraints(
@@ -63,7 +64,7 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                         .background(bgColor),
                     contentAlignment = Alignment.BottomCenter
                 ) {
-                    StandardKeyBoardListener(keyHeight = 60f,
+                    StandardKeyBoardListener(keyHeight = 66f,
                         mainLayout = standardLayoutQwerty,
                         changeKeyboardType =  { changeKeyboardType()},
                         keyboardListener = keyboardListener

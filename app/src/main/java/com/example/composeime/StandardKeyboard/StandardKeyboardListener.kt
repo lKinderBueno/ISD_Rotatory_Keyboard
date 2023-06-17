@@ -61,11 +61,11 @@ import com.example.composeime.standardLayoutQwerty
 @Composable
 fun StandardKeyBoardListener(
     modifier: Modifier = Modifier,
-    keyboardListener : KeyboardListener,
     mainLayout: Array<Array<KeyButton>>,
     keyHeight: Float = 30f,
     changeKeyboardType: () -> Unit,
-) {
+    keyboardListener : KeyboardListener,
+    ) {
     val ctx = LocalContext.current
 
     var selectedIndex by remember { mutableStateOf(0) }
@@ -84,10 +84,12 @@ fun StandardKeyBoardListener(
         if (layoutType == 0) {
             layoutType = 1
             layout = standardLayoutAbc
+            selectedIndex = 0
         }
         else{
             layoutType = 0
             layout = standardLayoutQwerty
+            selectedIndex = 0
         }
         //else if (layoutType == 2) {
         //    layoutType = 3

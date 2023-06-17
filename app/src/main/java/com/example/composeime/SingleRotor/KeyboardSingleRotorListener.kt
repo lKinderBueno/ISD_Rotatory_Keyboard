@@ -45,7 +45,8 @@ fun KeyBoardListenerSingleRotor(
     minSize: Dp = 64.dp,
     mainLayout: Array<KeyButton>,
     changeKeyboardType: () -> Unit,
-) {
+    keyboardListener : KeyboardListener,
+    ) {
     val ctx = LocalContext.current
 
     var selectedIndex by remember { mutableStateOf(0) }
@@ -62,12 +63,15 @@ fun KeyBoardListenerSingleRotor(
         if (layoutType == 0) {
             layoutType = 1
             layout = rotatoryLayoutAbc
+            selectedIndex = 0
         }else  if (layoutType == 1) {
             layoutType = 2
             layout = rotatoryLayoutCQwerty
+            selectedIndex = rotatoryLayoutCQwerty.size-1
         }else{
             layoutType == 0
             layout = rotatoryLayoutQwerty
+            selectedIndex = 0
         }
         //if (layoutType == 1) {
         //    layoutType = 2
@@ -126,6 +130,17 @@ fun KeyBoardListenerSingleRotor(
             }
         }
     }
+
+    keyboardListener.setEventListener(object : MyKeyboardListener {
+        override fun onEventOccurred(event : Int) {
+            if(KeyEvent.KEYCODE_DPAD_LEFT == event)
+                goLeft()
+            else if(KeyEvent.KEYCODE_DPAD_RIGHT == event)
+                goRight()
+            else if(KeyEvent.KEYCODE_DPAD_CENTER == event || KeyEvent.KEYCODE_ENTER == event)
+                enter()
+        }
+    })
 
     DisposableEffect(Unit) {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
