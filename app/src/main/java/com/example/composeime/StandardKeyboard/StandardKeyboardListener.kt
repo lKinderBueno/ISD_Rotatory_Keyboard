@@ -43,10 +43,14 @@ import java.net.DatagramSocket
 import java.net.InetAddress
 import java.net.UnknownHostException
 import androidx.compose.runtime.derivedStateOf
+import com.example.composeime.KeyboardListener
+import com.example.composeime.MyKeyboardListener
 import com.example.composeime.rotatoryLayoutAbc
 import com.example.composeime.rotatoryLayoutCQwerty
 import com.example.composeime.rotatoryLayoutCirrin
 import com.example.composeime.rotatoryLayoutQwerty
+import com.example.composeime.selectNextOrPreviousColumn
+import com.example.composeime.selectNextOrPreviousRow
 import com.example.composeime.standardLayoutAbc
 import com.example.composeime.standardLayoutCQwerty
 import com.example.composeime.standardLayoutCirrin
@@ -57,6 +61,7 @@ import com.example.composeime.standardLayoutQwerty
 @Composable
 fun StandardKeyBoardListener(
     modifier: Modifier = Modifier,
+    keyboardListener : KeyboardListener,
     mainLayout: Array<Array<KeyButton>>,
     keyHeight: Float = 30f,
     changeKeyboardType: () -> Unit,
@@ -70,27 +75,31 @@ fun StandardKeyBoardListener(
     var layout by remember {mutableStateOf(mainLayout)}
     var layoutType by remember { mutableStateOf(0) }
 
-    var shift by remember { mutableStateOf(true) }
+    var shift by remember { mutableStateOf(false) }
     val handler = Handler(Looper.getMainLooper())
 
     val numberOfItems by remember {derivedStateOf {getItemsInMatrix(layout)}}
 
     fun changeLayout() {
-        if (layoutType == 1) {
-            layoutType = 2
-            layout = standardLayoutQwerty
-        }
-        else if (layoutType == 2) {
-            layoutType = 3
-            layout = standardLayoutCirrin
-        }
-        else if (layoutType == 3) {
-            layoutType = 4
-            layout = standardLayoutCQwerty
-        }else{
+        if (layoutType == 0) {
             layoutType = 1
             layout = standardLayoutAbc
         }
+        else{
+            layoutType = 0
+            layout = standardLayoutQwerty
+        }
+        //else if (layoutType == 2) {
+        //    layoutType = 3
+        //    layout = standardLayoutCirrin
+        //}
+        //else if (layoutType == 3) {
+        //    layoutType = 4
+        //    layout = standardLayoutCQwerty
+        //}else{
+        //    layoutType = 1
+        //    layout = standardLayoutAbc
+        //}
         selectedIndex = 0
     }
 
@@ -132,12 +141,27 @@ fun StandardKeyBoardListener(
                 ExternalButtonAction.DEL -> (ctx as IMEService).currentInputConnection.deleteSurroundingText(1,0)
                 ExternalButtonAction.OK -> {
                     (ctx as IMEService).currentInputConnection?.performEditorAction(EditorInfo.IME_ACTION_DONE)
-                    shift = true
+                    shift = false
                     layout = mainLayout
                     selectedIndex = 0
                 }
             }
     }
+
+    keyboardListener.setEventListener(object : MyKeyboardListener {
+        override fun onEventOccurred(event : Int) {
+            if(KeyEvent.KEYCODE_DPAD_LEFT == event)
+                selectedIndex = selectNextOrPreviousColumn(selectedIndex, layout, true)//goLeft()
+            else if(KeyEvent.KEYCODE_DPAD_RIGHT == event)
+                selectedIndex = selectNextOrPreviousColumn(selectedIndex, layout, false)//goRight()
+            else if(KeyEvent.KEYCODE_DPAD_CENTER == event || KeyEvent.KEYCODE_ENTER == event)
+                enter()
+            else if(KeyEvent.KEYCODE_DPAD_UP == event)
+                selectedIndex = selectNextOrPreviousRow(selectedIndex, layout, true)
+            else if(KeyEvent.KEYCODE_DPAD_DOWN == event)
+                selectedIndex = selectNextOrPreviousRow(selectedIndex, layout, false)
+        }
+    })
 
     DisposableEffect(Unit) {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()

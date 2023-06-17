@@ -59,21 +59,31 @@ fun KeyBoardListenerSingleRotor(
     val handler = Handler(Looper.getMainLooper())
 
     fun changeLayout() {
-        if (layoutType == 1) {
-            layoutType = 2
-            layout = rotatoryLayoutQwerty
-        }
-        else if (layoutType == 2) {
-            layoutType = 3
-            layout = rotatoryLayoutCirrin
-        }
-        else if (layoutType == 3) {
-            layoutType = 4
-            layout = rotatoryLayoutCQwerty
-        }else{
+        if (layoutType == 0) {
             layoutType = 1
             layout = rotatoryLayoutAbc
+        }else  if (layoutType == 1) {
+            layoutType = 2
+            layout = rotatoryLayoutCQwerty
+        }else{
+            layoutType == 0
+            layout = rotatoryLayoutQwerty
         }
+        //if (layoutType == 1) {
+        //    layoutType = 2
+        //    layout = rotatoryLayoutQwerty
+        //}
+        //else if (layoutType == 2) {
+        //    layoutType = 3
+        //    layout = rotatoryLayoutCirrin
+        //}
+        //else if (layoutType == 3) {
+        //    layoutType = 4
+        //    layout = rotatoryLayoutCQwerty
+        //}else{
+        //    layoutType = 1
+        //    layout = rotatoryLayoutAbc
+        //}
         selectedIndex = 0
     }
 
@@ -110,7 +120,7 @@ fun KeyBoardListenerSingleRotor(
             ExternalButtonAction.DEL -> (ctx as IMEService).currentInputConnection.deleteSurroundingText(1,0)
             ExternalButtonAction.OK -> {
                 (ctx as IMEService).currentInputConnection?.performEditorAction(EditorInfo.IME_ACTION_DONE)
-                shift = true
+                shift = false
                 layout = mainLayout
                 selectedIndex = 0
             }

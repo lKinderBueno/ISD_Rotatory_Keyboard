@@ -86,6 +86,7 @@ fun StandardKeyBoardComponent(
                                 Image(
                                     painter = painterResource(id = if(key == _selected) R.drawable.space_bar_black else R.drawable.space_bar),
                                     contentDescription = "spacebar",
+                                    modifier = Modifier.scale(2f)
                                 )
                             }
                         }else if (key.action == ExternalButtonAction.SHIFT) {
@@ -124,12 +125,25 @@ fun StandardKeyBoardComponent(
                                     .weight(1f),
                                 contentAlignment = Alignment.Center
                             ) {
-                                FaIcon(
-                                    faIcon = FaIcons.Share,
-                                    size = (keyHeight * .5).dp,
-                                    tint = col,
+                                Image(
+                                    painter = painterResource(id = if(key == _selected) R.drawable.enter_black else R.drawable.enter),
+                                    contentDescription = "spacebar",
+                                    modifier = Modifier.scale(2f)
                                 )
                             }
+                            //Box(
+                            //    modifier = modifier
+                            //        .height(keyHeight.dp)
+                            //        .background(bg)
+                            //        .weight(1f),
+                            //    contentAlignment = Alignment.Center
+                            //) {
+                            //    FaIcon(
+                            //        faIcon = FaIcons.Share,
+                            //        size = (keyHeight * .5).dp,
+                            //        tint = col,
+                            //    )
+                            //}
                         }
 
                         if(it2 != rowSize)

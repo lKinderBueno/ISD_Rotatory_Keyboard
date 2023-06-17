@@ -51,15 +51,22 @@ fun RotatoryKeyboardButton(
             )
         }
 
-    else if(it.action == ExternalButtonAction.OK)
-        Box(modifier = Modifier.absolutePadding(left = 2.dp, top= 2.dp)
-        ) {
-            FaIcon(
-                faIcon = FaIcons.Share,
-                size = size.dp,
-                tint = Color.White,
-            )
-        }
+    else if(it.action == ExternalButtonAction.OK) {
+        Image(
+            painter = painterResource(id = R.drawable.enter),
+            contentDescription = "enter",
+            Modifier.scale(scale)
+        )
+        //Box(
+        //    modifier = Modifier.absolutePadding(left = 2.dp, top = 2.dp)
+        //) {
+        //    FaIcon(
+        //        faIcon = FaIcons.Share,
+        //        size = size.dp,
+        //        tint = Color.White,
+        //    )
+        //}
+    }
 
     else if(it.action == ExternalButtonAction.SPACE)
         Image(

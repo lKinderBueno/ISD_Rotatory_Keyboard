@@ -1,6 +1,8 @@
 package com.example.composeime
 
 import android.content.Context
+import android.util.Log
+import android.view.KeyEvent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -23,17 +25,16 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.AbstractComposeView
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composeime.ui.StandardKeyboard.StandardKeyBoardListener
 import com.example.composeime.ui.bgColor
+import kotlinx.coroutines.flow.MutableSharedFlow
 
-class ComposeKeyboardView(context: Context) : AbstractComposeView(context) {
-
+class ComposeKeyboardView(context: Context, private val keyboardListener : KeyboardListener) : AbstractComposeView(context) {
     @Composable
     override fun Content() {
-        var rotatoryLayout by remember { mutableStateOf(rotatoryLayoutQwerty) }
-        var standardLayout by remember { mutableStateOf(standardLayoutQwerty) }
-        var keyboardType by remember { mutableStateOf(0) }
+        var keyboardType by remember { mutableStateOf(1) }
 
         fun changeKeyboardType() {
             if (keyboardType == 0)
@@ -52,7 +53,7 @@ class ComposeKeyboardView(context: Context) : AbstractComposeView(context) {
             if (keyboardType == 1)
                 KeyBoardListenerSingleRotor(
                     minSize = 10.dp,
-                    mainLayout = rotatoryLayout,
+                    mainLayout = rotatoryLayoutCQwerty,
                     changeKeyboardType =  { changeKeyboardType()},
                 )
             else
@@ -63,11 +64,13 @@ class ComposeKeyboardView(context: Context) : AbstractComposeView(context) {
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     StandardKeyBoardListener(keyHeight = 60f,
-                        mainLayout = standardLayout,
+                        mainLayout = standardLayoutQwerty,
                         changeKeyboardType =  { changeKeyboardType()},
+                        keyboardListener = keyboardListener
                     )
                 }
         }
 
     }
 }
+
