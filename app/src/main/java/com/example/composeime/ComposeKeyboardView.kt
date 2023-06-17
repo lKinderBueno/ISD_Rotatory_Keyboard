@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 class ComposeKeyboardView(context: Context, private val keyboardListener : KeyboardListener) : AbstractComposeView(context) {
     @Composable
     override fun Content() {
-        var keyboardType by remember { mutableStateOf(1) }
+        var keyboardType by remember { mutableStateOf(0) }
 
         fun changeKeyboardType() {
             if (keyboardType == 0)
@@ -45,7 +45,7 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier
-                .height(270.dp)
+                .height(271.dp)
                 .fillMaxWidth()
                 .background(color = Color.Transparent)
         ) {

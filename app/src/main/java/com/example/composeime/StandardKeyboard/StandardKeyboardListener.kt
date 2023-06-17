@@ -84,12 +84,10 @@ fun StandardKeyBoardListener(
         if (layoutType == 0) {
             layoutType = 1
             layout = standardLayoutAbc
-            selectedIndex = 0
         }
         else{
             layoutType = 0
             layout = standardLayoutQwerty
-            selectedIndex = 0
         }
         //else if (layoutType == 2) {
         //    layoutType = 3

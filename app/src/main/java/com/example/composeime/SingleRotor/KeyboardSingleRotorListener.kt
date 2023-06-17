@@ -56,7 +56,7 @@ fun KeyBoardListenerSingleRotor(
     var layout by remember {mutableStateOf(mainLayout)}
     var layoutType by remember { mutableStateOf(0) }
 
-    var shift by remember { mutableStateOf(true) }
+    var shift by remember { mutableStateOf(false) }
     val handler = Handler(Looper.getMainLooper())
 
     fun changeLayout() {
@@ -69,7 +69,7 @@ fun KeyBoardListenerSingleRotor(
             layout = rotatoryLayoutCQwerty
             selectedIndex = rotatoryLayoutCQwerty.size-1
         }else{
-            layoutType == 0
+            layoutType = 0
             layout = rotatoryLayoutQwerty
             selectedIndex = 0
         }
@@ -88,7 +88,6 @@ fun KeyBoardListenerSingleRotor(
         //    layoutType = 1
         //    layout = rotatoryLayoutAbc
         //}
-        selectedIndex = 0
     }
 
     fun goRight(){

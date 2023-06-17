@@ -59,7 +59,7 @@ val standardLayoutQwerty = arrayOf(
         .plus(_layoutQwerty.sliceArray(19..25).map{KeyButton(it)}.toTypedArray())
 
         .plus(KeyButton("DEL", action = ExternalButtonAction.DEL, size = 13)),
-    arrayOf<KeyButton>(KeyButton("?123", action = ExternalButtonAction.NUMBERS))
+    arrayOf<KeyButton>(KeyButton("123", action = ExternalButtonAction.NUMBERS))
         .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
 
         .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))
@@ -73,7 +73,7 @@ val standardLayoutCQwerty = arrayOf(
         .plus(_layoutCQwerty.sliceArray(19..25).map{KeyButton(it)}.toTypedArray())
 
         .plus(KeyButton("DEL", action = ExternalButtonAction.DEL, size = 13)),
-    arrayOf<KeyButton>(KeyButton("?123", action = ExternalButtonAction.NUMBERS))
+    arrayOf<KeyButton>(KeyButton("123", action = ExternalButtonAction.NUMBERS))
         .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
 
         .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))
@@ -88,7 +88,7 @@ val standardLayoutCirrin = arrayOf(
         .plus(_layoutCirrin.sliceArray(19..25).map{KeyButton(it)}.toTypedArray())
 
         .plus(KeyButton("DEL", action = ExternalButtonAction.DEL, size = 13)),
-    arrayOf<KeyButton>(KeyButton("?123", action = ExternalButtonAction.NUMBERS))
+    arrayOf<KeyButton>(KeyButton("123", action = ExternalButtonAction.NUMBERS))
         .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
         .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))
 )
@@ -101,7 +101,7 @@ val standardLayoutAbc = arrayOf(
         .plus(_layoutAbc.sliceArray(19..25).map{KeyButton(it)}.toTypedArray())
 
         .plus(KeyButton("DEL", action = ExternalButtonAction.DEL, size = 13)),
-    arrayOf<KeyButton>(KeyButton("?123", action = ExternalButtonAction.NUMBERS))
+    arrayOf<KeyButton>(KeyButton("123", action = ExternalButtonAction.NUMBERS))
         .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
 
         .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))

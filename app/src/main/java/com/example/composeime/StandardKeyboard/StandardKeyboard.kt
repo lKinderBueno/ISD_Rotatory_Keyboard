@@ -63,7 +63,7 @@ fun StandardKeyBoardComponent(
                                     .background(bg),
                                 contentAlignment = Alignment.Center,
                             ) {
-                                Text(text = text, color = col, fontSize = 20.sp)
+                                Text(text = text, color = col, fontSize = 24.sp)
                             }
                         else if (key.action == ExternalButtonAction.NUMBERS) {
                             Box(
@@ -73,7 +73,7 @@ fun StandardKeyBoardComponent(
                                     .weight(1f),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(text = text, color = col, fontSize = 20.sp)
+                                Text(text = text, color = col, fontSize = 24.sp)
                             }
                         }else if (key.action == ExternalButtonAction.SPACE) {
                             Box(
