@@ -50,8 +50,20 @@ val rotatoryLayoutSymbols = _layoutSymbols.map{KeyButton(it)}.toTypedArray()
     .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
     .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))
 
+val standardLayoutQwerty = arrayOf(
+    _layoutQwerty.sliceArray(0..9).map{KeyButton(it)}.toTypedArray(),
+    _layoutQwerty.sliceArray(10..18).map{KeyButton(it)}.toTypedArray().plus(KeyButton("DEL", action = ExternalButtonAction.DEL, size = 13)),
+    arrayOf<KeyButton>(KeyButton("SH", action = ExternalButtonAction.SHIFT))
+        .plus(_layoutQwerty.sliceArray(19..25).map{KeyButton(it)}.toTypedArray())
+        .plus(KeyButton("123", action = ExternalButtonAction.NUMBERS))
 
+        ,
+    arrayOf<KeyButton>()
+        .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
 
+        .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))
+)
+/*
 val standardLayoutQwerty = arrayOf(
     _layoutQwerty.sliceArray(0..9).map{KeyButton(it)}.toTypedArray(),
     _layoutQwerty.sliceArray(10..18).map{KeyButton(it)}.toTypedArray(),
@@ -64,7 +76,7 @@ val standardLayoutQwerty = arrayOf(
 
         .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))
 )
-
+*/
 
 val standardLayoutCQwerty = arrayOf(
     _layoutCQwerty.sliceArray(0..9).map{KeyButton(it)}.toTypedArray(),

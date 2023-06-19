@@ -58,7 +58,7 @@ fun StandardKeyBoardComponent(
                         if (key.action == ExternalButtonAction.INPUT)
                             Box(
                                 modifier = modifier
-                                    .width(keyHeight.dp)
+                                    .weight(1f)
                                     .height(keyHeight.dp)
                                     .background(bg),
                                 contentAlignment = Alignment.Center,
@@ -70,7 +70,7 @@ fun StandardKeyBoardComponent(
                                 modifier = modifier
                                     .height(keyHeight.dp)
                                     .background(bg)
-                                    .weight(1f),
+                                    .weight(2f),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(text = text, color = col, fontSize = 24.sp)
@@ -80,7 +80,7 @@ fun StandardKeyBoardComponent(
                                 modifier = modifier
                                     .height(keyHeight.dp)
                                     .background(bg)
-                                    .weight(3f),
+                                    .weight(8f),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Image(
@@ -92,9 +92,9 @@ fun StandardKeyBoardComponent(
                         }else if (key.action == ExternalButtonAction.SHIFT) {
                             Box(
                                 modifier = modifier
+                                    .weight(1f)
                                     .height(keyHeight.dp)
-                                    .background(bg)
-                                    .weight(1f),
+                                    .background(bg),
                                 contentAlignment = Alignment.Center
                             ) {
                                 FaIcon(
@@ -122,7 +122,7 @@ fun StandardKeyBoardComponent(
                                 modifier = modifier
                                     .height(keyHeight.dp)
                                     .background(bg)
-                                    .weight(1f),
+                                    .weight(2f),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Image(

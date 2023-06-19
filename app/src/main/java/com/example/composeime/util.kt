@@ -36,7 +36,7 @@ var lastPressed : Int? = null
 fun selectNextOrPreviousRow(index: Int, array: Array<Array<KeyButton>>, isPrevious: Boolean): Int {
     var row = calculateRow(index, array)
     var col = calculateColumn(index, array)
-
+    var skip = false
 
     if (row == null || col == null) return 0
 
@@ -51,21 +51,39 @@ fun selectNextOrPreviousRow(index: Int, array: Array<Array<KeyButton>>, isPrevio
         else row + 1
     }
 
-    if (row == array.size - 1 && col == 2) {
-        nextCol = array[nextRow].size - 1
-    }else if (row == array.size - 1 && col == 1) {
-        nextCol = lastPressed ?: array[nextRow].size/2
-    } else if (nextRow == array.size - 1) {
-        if (col == 0) nextCol = 0
-        else if (col == array[row].size - 1) nextCol = 2
-        else {
-            nextCol = 1
-            lastPressed = col
-        }
-    } else if (col >= array[nextRow].size)
-        nextCol = array[nextRow].size - 1
-    else nextCol = col
 
+    if(array[row][col].action == ExternalButtonAction.SPACE && isPrevious){
+        nextCol = lastPressed ?: array[nextRow].size - 2
+        lastPressed = null
+    }else if(array[row][col].action == ExternalButtonAction.NUMBERS && isPrevious){
+        nextCol = lastPressed ?: array[nextRow].size - 1
+        lastPressed = null
+    }else if(array[row][col].action == ExternalButtonAction.OK && isPrevious){
+        nextCol = array[nextRow].size -1
+        lastPressed = null
+        skip = true
+    }else if(array[row][col].action == ExternalButtonAction.NUMBERS && isPrevious){
+        nextCol = array[nextRow].size -1
+        lastPressed = null
+    }else if(nextRow == array.size-1 && col <= array[row].size-2){
+        nextCol = 0
+        lastPressed = null
+    }
+    else if (col >= array[nextRow].size) {
+        nextCol = array[nextRow].size - 1
+        lastPressed = null
+    }
+    else {
+        nextCol = col
+        lastPressed = null
+    }
+
+    if(!skip) {
+        if (array[nextRow][nextCol].action == ExternalButtonAction.SPACE)
+            lastPressed = col
+        else if (array[nextRow][nextCol].action == ExternalButtonAction.NUMBERS)
+            lastPressed = col
+    }
     var index = 0
     (0..(nextRow - 1)).forEach {
         index += array[it].size
@@ -94,7 +112,7 @@ fun selectNextOrPreviousRowABC(index: Int, array: Array<Array<KeyButton>>, isPre
     }
 
     if(row == array.size - 1 && isPrevious && lastPressed != null){
-        nextCol = lastPressed as Int
+        nextCol = lastPressed ?: array[nextRow].size - 2
         lastPressed = null
     }else if (row == array.size - 1 && col == array[array.size - 1].size -1) {
         nextCol = array[nextRow].size - 1
@@ -143,6 +161,31 @@ fun selectNextOrPreviousColumn(index: Int, array: Array<Array<KeyButton>>, isPre
 
 }
 
+/*
+fun selectNextOrPreviousColumn(index: Int, array: Array<Array<KeyButton>>, isPrevious: Boolean): Int {
+    var row = calculateRow(index, array)
+    var col = calculateColumn(index, array)
+
+
+    if (row == null || col == null) return 0
+    if(isPrevious){
+        if(col -1 < 0) col = array[row].size-1
+        else col--
+    }else{
+        if(col +1 >=  array[row].size) col = 0
+        else col++
+    }
+
+    if(row == array.size - 1 && col == 1) lastPressed = null
+
+    var index = 0
+    (0..(row - 1)).forEach {
+        index += array[it].size
+    }
+    return index + col
+
+}
+*/
 
 fun getItemsInMatrix(array: Array<Array<KeyButton>>): Int {
     var i = 0
