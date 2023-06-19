@@ -60,19 +60,15 @@ fun KeyBoardListenerSingleRotor(
     val handler = Handler(Looper.getMainLooper())
 
     fun changeLayout() {
-        if (layoutType == 0) {
-            layoutType = 1
-            layout = rotatoryLayoutAbc
-            selectedIndex = 0
-        }else  if (layoutType == 1) {
-            layoutType = 2
-            layout = rotatoryLayoutCQwerty
-            selectedIndex = rotatoryLayoutCQwerty.size-1
-        }else{
-            layoutType = 0
-            layout = rotatoryLayoutQwerty
-            selectedIndex = 0
-        }
+        //if (layoutType == 0) {
+        //    layoutType = 1
+        //    layout = rotatoryLayoutAbc
+        //    selectedIndex = 0
+        //}else{
+        //    layoutType = 0
+        //    layout = rotatoryLayoutCQwerty
+        //    selectedIndex = 0
+        //}
         //if (layoutType == 1) {
         //    layoutType = 2
         //    layout = rotatoryLayoutQwerty

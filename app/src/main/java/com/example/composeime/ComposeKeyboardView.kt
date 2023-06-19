@@ -42,6 +42,8 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                 keyboardType = 1
             else if (keyboardType == 1)
                 keyboardType = 2
+            else if (keyboardType == 2)
+                keyboardType = 3
             else keyboardType = 0
         }
 
@@ -53,14 +55,8 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                 .background(color = Color.Transparent)
         ) {
 
-            if (keyboardType == 2)
-                KeyBoardListenerSingleRotor(
-                    minSize = 10.dp,
-                    mainLayout = rotatoryLayoutAbc,
-                    changeKeyboardType =  { changeKeyboardType()},
-                    keyboardListener = keyboardListener
-                )
-            else if(keyboardType == 0)
+
+            if(keyboardType == 0)
                 BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -86,6 +82,20 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                         keyboardListener = keyboardListener
                     )
                 }
+            else if (keyboardType == 2)
+                KeyBoardListenerSingleRotor(
+                    minSize = 10.dp,
+                    mainLayout = rotatoryLayoutCQwerty,
+                    changeKeyboardType =  { changeKeyboardType()},
+                    keyboardListener = keyboardListener
+                )
+            else if (keyboardType == 3)
+                KeyBoardListenerSingleRotor(
+                    minSize = 10.dp,
+                    mainLayout = rotatoryLayoutAbc,
+                    changeKeyboardType =  { changeKeyboardType()},
+                    keyboardListener = keyboardListener
+                )
         }
 
     }
