@@ -53,7 +53,7 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
             if (keyboardType == 1)
                 KeyBoardListenerSingleRotor(
                     minSize = 10.dp,
-                    mainLayout = rotatoryLayoutQwerty,
+                    mainLayout = rotatoryLayoutAbc,
                     changeKeyboardType =  { changeKeyboardType()},
                     keyboardListener = keyboardListener
                 )
