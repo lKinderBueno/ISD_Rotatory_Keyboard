@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 class ComposeKeyboardView(context: Context, private val keyboardListener : KeyboardListener) : AbstractComposeView(context) {
     @Composable
     override fun Content() {
-        var keyboardType by remember { mutableStateOf(1) }
+        var keyboardType by remember { mutableStateOf(0) }
 
         fun changeKeyboardType() {
             if (keyboardType == 0)
