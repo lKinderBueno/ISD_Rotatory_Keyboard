@@ -81,14 +81,14 @@ fun StandardKeyBoardListener(
     val numberOfItems by remember {derivedStateOf {getItemsInMatrix(layout)}}
 
     fun changeLayout() {
-        if (layoutType == 0) {
-            layoutType = 1
-            layout = standardLayoutAbc
-        }
-        else{
-            layoutType = 0
-            layout = standardLayoutQwerty
-        }
+        //if (layoutType == 0) {
+        //    layoutType = 1
+        //    layout = standardLayoutAbc
+        //}
+        //else{
+        //    layoutType = 0
+        //    layout = standardLayoutQwerty
+        //}
         //else if (layoutType == 2) {
         //    layoutType = 3
         //    layout = standardLayoutCirrin
@@ -119,6 +119,8 @@ fun StandardKeyBoardListener(
         val item = getButtonFromMatrix(selectedIndex, layout)
         if (item != null)
             when (item.action) {
+                ExternalButtonAction.EMPTY -> {
+                }
                 ExternalButtonAction.INPUT -> {
                     (ctx as IMEService).currentInputConnection.commitText(
                         if (shift) item.text.uppercase() else item.text.lowercase(),

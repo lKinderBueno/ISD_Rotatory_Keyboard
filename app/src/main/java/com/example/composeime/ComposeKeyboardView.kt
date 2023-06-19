@@ -27,6 +27,7 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.composeime.ui.StandardKeyboard.StandardKeyBoardABCListener
 import com.example.composeime.ui.StandardKeyboard.StandardKeyBoardListener
 import com.example.composeime.ui.bgColor
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,11 +35,13 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 class ComposeKeyboardView(context: Context, private val keyboardListener : KeyboardListener) : AbstractComposeView(context) {
     @Composable
     override fun Content() {
-        var keyboardType by remember { mutableStateOf(0) }
+        var keyboardType by remember { mutableStateOf(1) }
 
         fun changeKeyboardType() {
             if (keyboardType == 0)
                 keyboardType = 1
+            else if (keyboardType == 1)
+                keyboardType = 2
             else keyboardType = 0
         }
 
@@ -50,14 +53,14 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                 .background(color = Color.Transparent)
         ) {
 
-            if (keyboardType == 1)
+            if (keyboardType == 2)
                 KeyBoardListenerSingleRotor(
                     minSize = 10.dp,
                     mainLayout = rotatoryLayoutAbc,
                     changeKeyboardType =  { changeKeyboardType()},
                     keyboardListener = keyboardListener
                 )
-            else
+            else if(keyboardType == 0)
                 BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -66,6 +69,19 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                 ) {
                     StandardKeyBoardListener(keyHeight = 66f,
                         mainLayout = standardLayoutQwerty,
+                        changeKeyboardType =  { changeKeyboardType()},
+                        keyboardListener = keyboardListener
+                    )
+                }
+            else if(keyboardType == 1)
+                BoxWithConstraints(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(bgColor),
+                    contentAlignment = Alignment.BottomCenter
+                ) {
+                    StandardKeyBoardABCListener(keyHeight = 66f,
+                        mainLayout = standardLayoutAbcV2,
                         changeKeyboardType =  { changeKeyboardType()},
                         keyboardListener = keyboardListener
                     )

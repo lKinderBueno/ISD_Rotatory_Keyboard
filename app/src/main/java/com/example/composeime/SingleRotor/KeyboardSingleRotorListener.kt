@@ -103,6 +103,8 @@ fun KeyBoardListenerSingleRotor(
 
     fun enter(){
         when (layout[selectedIndex].action) {
+            ExternalButtonAction.EMPTY -> {
+            }
             ExternalButtonAction.INPUT -> {
                 (ctx as IMEService).currentInputConnection.commitText(
                     if (shift) layout[selectedIndex].text.uppercase() else layout[selectedIndex].text.lowercase(),

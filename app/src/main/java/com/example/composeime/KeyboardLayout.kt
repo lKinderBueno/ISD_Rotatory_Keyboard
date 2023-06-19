@@ -1,7 +1,7 @@
 package com.example.composeime
 
 enum class ExternalButtonAction {
-    NUMBERS, SPACE, SHIFT, DEL, OK, INPUT
+    NUMBERS, SPACE, SHIFT, DEL, OK, INPUT, EMPTY
 }
 
 class KeyButton(text: String, action: ExternalButtonAction = ExternalButtonAction.INPUT, size: Int = 15){
@@ -105,6 +105,15 @@ val standardLayoutAbc = arrayOf(
         .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
 
         .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13))
+)
+
+val standardLayoutAbcV2 = arrayOf(
+    _layoutAbc.sliceArray(0..6).map{KeyButton(it)}.toTypedArray().plus(KeyButton("DEL", action = ExternalButtonAction.DEL, size = 13)),
+    _layoutAbc.sliceArray(7..13).map{KeyButton(it)}.toTypedArray().plus(KeyButton("123", action = ExternalButtonAction.NUMBERS)),
+    _layoutAbc.sliceArray(14..20).map{KeyButton(it)}.toTypedArray().plus(KeyButton("SH", action = ExternalButtonAction.SHIFT)),
+    _layoutAbc.sliceArray(21..25).map{KeyButton(it)}.toTypedArray()
+        .plus(KeyButton("SP", action = ExternalButtonAction.SPACE))
+        .plus(KeyButton("OK", action = ExternalButtonAction.OK, size = 13)),
 )
 
 
