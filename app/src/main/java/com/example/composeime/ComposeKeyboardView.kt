@@ -66,7 +66,8 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                     StandardKeyBoardListener(keyHeight = 66f,
                         mainLayout = standardLayoutQwerty,
                         changeKeyboardType =  { changeKeyboardType()},
-                        keyboardListener = keyboardListener
+                        keyboardListener = keyboardListener,
+                        context = context
                     )
                 }
             else if(keyboardType == 1)
@@ -79,7 +80,8 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                     StandardKeyBoardABCListener(keyHeight = 66f,
                         mainLayout = standardLayoutAbcV2,
                         changeKeyboardType =  { changeKeyboardType()},
-                        keyboardListener = keyboardListener
+                        keyboardListener = keyboardListener,
+                        context = context
                     )
                 }
             else if (keyboardType == 2)
@@ -87,14 +89,16 @@ class ComposeKeyboardView(context: Context, private val keyboardListener : Keybo
                     minSize = 10.dp,
                     mainLayout = rotatoryLayoutCQwerty,
                     changeKeyboardType =  { changeKeyboardType()},
-                    keyboardListener = keyboardListener
+                    keyboardListener = keyboardListener,
+                    context = context
                 )
             else if (keyboardType == 3)
                 KeyBoardListenerSingleRotor(
                     minSize = 10.dp,
                     mainLayout = rotatoryLayoutAbc,
                     changeKeyboardType =  { changeKeyboardType()},
-                    keyboardListener = keyboardListener
+                    keyboardListener = keyboardListener,
+                    context = context
                 )
         }
 

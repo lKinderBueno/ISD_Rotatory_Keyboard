@@ -1,5 +1,6 @@
 package com.example.composeime
 
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.StrictMode
@@ -46,6 +47,7 @@ fun KeyBoardListenerSingleRotor(
     mainLayout: Array<KeyButton>,
     changeKeyboardType: () -> Unit,
     keyboardListener : KeyboardListener,
+    context: Context
     ) {
     val ctx = LocalContext.current
 
@@ -58,6 +60,15 @@ fun KeyBoardListenerSingleRotor(
 
     var shift by remember { mutableStateOf(false) }
     val handler = Handler(Looper.getMainLooper())
+
+    val tema = TemaImeLogger(context)
+    if(mainLayout == rotatoryLayoutAbc)
+        tema.writeToLog("Circular ABC", false)
+    else if(mainLayout == rotatoryLayoutCQwerty)
+        tema.writeToLog("Circular Cqwerty", false)
+    else if(mainLayout == rotatoryLayoutSymbols)
+        tema.writeToLog("Circular Symbols", false)
+
 
     fun changeLayout() {
         //if (layoutType == 0) {
@@ -87,17 +98,21 @@ fun KeyBoardListenerSingleRotor(
     }
 
     fun goRight(){
+        tema.writeToLog("R", false)
         if(selectedIndex >= 0 && selectedIndex < layout.size-1)
             selectedIndex++
         else selectedIndex = 0;
     }
 
     fun goLeft(){
+        tema.writeToLog("L", false)
         if(selectedIndex > 0) selectedIndex--;
         else selectedIndex =  layout.size-1;
     }
 
     fun enter(){
+        tema.writeToLog("E", false)
+
         when (layout[selectedIndex].action) {
             ExternalButtonAction.EMPTY -> {
             }

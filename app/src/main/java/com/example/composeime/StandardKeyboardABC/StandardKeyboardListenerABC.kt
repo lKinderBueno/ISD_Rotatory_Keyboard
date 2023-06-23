@@ -1,5 +1,6 @@
 package com.example.composeime.ui.StandardKeyboard
 
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.StrictMode
@@ -45,6 +46,7 @@ import java.net.UnknownHostException
 import androidx.compose.runtime.derivedStateOf
 import com.example.composeime.KeyboardListener
 import com.example.composeime.MyKeyboardListener
+import com.example.composeime.TemaImeLogger
 import com.example.composeime.rotatoryLayoutAbc
 import com.example.composeime.rotatoryLayoutCQwerty
 import com.example.composeime.rotatoryLayoutCirrin
@@ -67,6 +69,7 @@ fun StandardKeyBoardABCListener(
     keyHeight: Float = 30f,
     changeKeyboardType: () -> Unit,
     keyboardListener : KeyboardListener,
+    context: Context
     ) {
     val ctx = LocalContext.current
 
@@ -81,6 +84,12 @@ fun StandardKeyBoardABCListener(
     val handler = Handler(Looper.getMainLooper())
 
     val numberOfItems by remember {derivedStateOf {getItemsInMatrix(layout)}}
+
+    val tema = TemaImeLogger(context)
+    if(mainLayout == standardLayoutAbcV2)
+        tema.writeToLog("Linear ABC", false)
+    else if(mainLayout == standardLayoutSymbols)
+        tema.writeToLog("Linear symbols", false)
 
     fun changeLayout() {
 
@@ -100,17 +109,22 @@ fun StandardKeyBoardABCListener(
 
 
     fun goRight() {
+        tema.writeToLog("R", false)
         if (selectedIndex >= 0 && selectedIndex < numberOfItems-1)
             selectedIndex++
         else selectedIndex = 0;
     }
 
     fun goLeft() {
+        tema.writeToLog("L", false)
+
         if (selectedIndex > 0) selectedIndex--;
         else selectedIndex = numberOfItems - 1;
     }
 
     fun enter() {
+        tema.writeToLog("E", false)
+
         val item = getButtonFromMatrix(selectedIndex, layout)
         if (item != null)
             when (item.action) {
@@ -147,16 +161,21 @@ fun StandardKeyBoardABCListener(
 
     keyboardListener.setEventListener(object : MyKeyboardListener {
         override fun onEventOccurred(event : Int) {
-            if(KeyEvent.KEYCODE_DPAD_LEFT == event)
+            if(KeyEvent.KEYCODE_DPAD_LEFT == event) {
+                tema.writeToLog("L", false)
                 selectedIndex = selectNextOrPreviousColumn(selectedIndex, layout, true)//goLeft()
-            else if(KeyEvent.KEYCODE_DPAD_RIGHT == event)
+            }else if(KeyEvent.KEYCODE_DPAD_RIGHT == event) {
+                tema.writeToLog("R", false)
                 selectedIndex = selectNextOrPreviousColumn(selectedIndex, layout, false)//goRight()
-            else if(KeyEvent.KEYCODE_DPAD_CENTER == event || KeyEvent.KEYCODE_ENTER == event)
+            }else if(KeyEvent.KEYCODE_DPAD_CENTER == event || KeyEvent.KEYCODE_ENTER == event) {
                 enter()
-            else if(KeyEvent.KEYCODE_DPAD_UP == event)
+            }else if(KeyEvent.KEYCODE_DPAD_UP == event) {
+                tema.writeToLog("U", false)
                 selectedIndex = selectNextOrPreviousRowABC(selectedIndex, layout, true)
-            else if(KeyEvent.KEYCODE_DPAD_DOWN == event)
+            }else if(KeyEvent.KEYCODE_DPAD_DOWN == event) {
+                tema.writeToLog("D", false)
                 selectedIndex = selectNextOrPreviousRowABC(selectedIndex, layout, false)
+            }
         }
     })
 

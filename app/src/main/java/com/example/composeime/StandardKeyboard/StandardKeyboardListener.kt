@@ -1,5 +1,6 @@
 package com.example.composeime.ui.StandardKeyboard
 
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.StrictMode
@@ -45,10 +46,12 @@ import java.net.UnknownHostException
 import androidx.compose.runtime.derivedStateOf
 import com.example.composeime.KeyboardListener
 import com.example.composeime.MyKeyboardListener
+import com.example.composeime.TemaImeLogger
 import com.example.composeime.rotatoryLayoutAbc
 import com.example.composeime.rotatoryLayoutCQwerty
 import com.example.composeime.rotatoryLayoutCirrin
 import com.example.composeime.rotatoryLayoutQwerty
+import com.example.composeime.rotatoryLayoutSymbols
 import com.example.composeime.selectNextOrPreviousColumn
 import com.example.composeime.selectNextOrPreviousRow
 import com.example.composeime.standardLayoutAbc
@@ -65,6 +68,7 @@ fun StandardKeyBoardListener(
     keyHeight: Float = 30f,
     changeKeyboardType: () -> Unit,
     keyboardListener : KeyboardListener,
+    context: Context
     ) {
     val ctx = LocalContext.current
 
@@ -79,6 +83,12 @@ fun StandardKeyBoardListener(
     val handler = Handler(Looper.getMainLooper())
 
     val numberOfItems by remember {derivedStateOf {getItemsInMatrix(layout)}}
+
+    val tema = TemaImeLogger(context)
+    if(mainLayout == standardLayoutQwerty)
+        tema.writeToLog("Linear Qwerty", false)
+    else if(mainLayout == standardLayoutSymbols)
+        tema.writeToLog("Linear symbols", false)
 
     fun changeLayout() {
         //if (layoutType == 0) {
@@ -105,17 +115,23 @@ fun StandardKeyBoardListener(
 
 
     fun goRight() {
+        tema.writeToLog("R", false)
+
         if (selectedIndex >= 0 && selectedIndex < numberOfItems-1)
             selectedIndex++
         else selectedIndex = 0;
     }
 
     fun goLeft() {
+        tema.writeToLog("L", false)
+
         if (selectedIndex > 0) selectedIndex--;
         else selectedIndex = numberOfItems - 1;
     }
 
     fun enter() {
+        tema.writeToLog("E", false)
+
         val item = getButtonFromMatrix(selectedIndex, layout)
         if (item != null)
             when (item.action) {
@@ -152,16 +168,21 @@ fun StandardKeyBoardListener(
 
     keyboardListener.setEventListener(object : MyKeyboardListener {
         override fun onEventOccurred(event : Int) {
-            if(KeyEvent.KEYCODE_DPAD_LEFT == event)
+            if(KeyEvent.KEYCODE_DPAD_LEFT == event) {
+                tema.writeToLog("L", false)
                 selectedIndex = selectNextOrPreviousColumn(selectedIndex, layout, true)//goLeft()
-            else if(KeyEvent.KEYCODE_DPAD_RIGHT == event)
+            }else if(KeyEvent.KEYCODE_DPAD_RIGHT == event) {
+                tema.writeToLog("R", false)
                 selectedIndex = selectNextOrPreviousColumn(selectedIndex, layout, false)//goRight()
-            else if(KeyEvent.KEYCODE_DPAD_CENTER == event || KeyEvent.KEYCODE_ENTER == event)
+            }else if(KeyEvent.KEYCODE_DPAD_CENTER == event || KeyEvent.KEYCODE_ENTER == event) {
                 enter()
-            else if(KeyEvent.KEYCODE_DPAD_UP == event)
+            }else if(KeyEvent.KEYCODE_DPAD_UP == event) {
+                tema.writeToLog("U", false)
                 selectedIndex = selectNextOrPreviousRow(selectedIndex, layout, true)
-            else if(KeyEvent.KEYCODE_DPAD_DOWN == event)
+            }else if(KeyEvent.KEYCODE_DPAD_DOWN == event) {
+                tema.writeToLog("D", false)
                 selectedIndex = selectNextOrPreviousRow(selectedIndex, layout, false)
+            }
         }
     })
 
